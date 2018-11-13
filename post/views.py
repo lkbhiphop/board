@@ -37,3 +37,29 @@ def detail(request,id):
     post = Post.objects.get(id = id)
     return render(request, 'post/detail.html', {'post':post})
     
+def update(request,id):
+    post = Post.objects.get(id=id)
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            content = form.cleaned_data.get('content')
+            # post라는 기존의 데이터를 수정해야한다.
+            # post.update(title=title , content=contet)
+            # 위와 같은 코드
+            post.title = title
+            post.content = content
+            post.save()
+            return redirect(resolve_url('post:detail', id))
+        # 폼을 검증 후 수정 저장하는 단계
+    else:
+        # 기존의 데이터를 폼에 담아서 사용자에게 전달
+        
+        form  = PostForm({'title':post.title,'content':post.content})
+    return render(request, 'post/update.html',{'form':form, 'post':post})    
+
+def delete(request,id):
+    # 해당 아이디값을 가진 post를 찾아야한다.
+    post = Post.objects.get(id=id)
+    post.delete()
+    return redirect(resolve_url('post:list'))

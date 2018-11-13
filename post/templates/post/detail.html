@@ -1,6 +1,8 @@
 {%extends 'post/base.html' %}
 
 {%block body_block%}
+    <a href="{% url 'post:update' id=post.id%}">수정</a>
+    <a href="{% url 'post:delete' id=post.id%}">삭제</a>
     <h5>{{post.title}}</h5>
     {% autoescape off %}
     <h6>{{post.content}}</h6>
