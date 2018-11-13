@@ -1,0 +1,9 @@
+{%extends 'post/base.html' %}
+
+{%block body_block%}
+    <h5>{{post.title}}</h5>
+    {% autoescape off %}
+    <h6>{{post.content}}</h6>
+    {% endautoescape %}
+    
+{%endblock%}
